@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FFFCEE">
+<title>Target AU — EJ Cho</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── VARIABLES & RESET ── */
+  :root {
+    --bg: #FFFCEE; /* lemon-tinted white */
+    --surface: #F3F1E6;
+    --ink: #1A2FD0; /* deep blue */
+    --ink-muted: #4A58C4;
+    --line: rgba(26, 47, 208, 0.18);
+    --hover: #6577E6;
+    --sans: 'Space Grotesk', sans-serif;
+    --serif: 'Fraunces', serif;
+    --max-width: 1600px;
+    --gutter: 48px; /* page side padding, overridden per breakpoint */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* Shared page container */
+  .case-hero,
+  .case-body,
+  .case-nav,
+  footer {
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Shared small uppercase label */
+  .meta-label,
+  .section-title,
+  .nav-direction,
+  .footer-cta-label,
+  .footer-links a {
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    background: var(--bg);
+  }
+
+  .nav-inner {
+    width: 100%;
+    max-width: var(--max-width);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px var(--gutter);
+  }
+
+  .nav-logo {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: inline-block;
+    font-size: 32px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--hover);
+    transform: translateY(1px);
+  }
+
+  /* ── CASE HERO ── */
+  .case-hero {
+    display: grid;
+    grid-template-columns: 1fr 450px;
+    gap: 16px;
+    align-items: end;
+    padding: 140px var(--gutter) 80px;
+  }
+
+  .case-title {
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .case-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-self: end;
+  }
+
+  .meta-item {
+    padding: 20px 0 20px 32px;
+    border-top: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+
+  .meta-item:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .meta-item:nth-child(2n) {
+    border-right: none;
+  }
+
+  .meta-item:nth-last-child(-n + 2) {
+    padding-bottom: 0;
+  }
+
+  .meta-item:last-child {
+    padding-right: 0;
+  }
+
+  .meta-label {
+    margin-bottom: 6px;
+  }
+
+  .meta-value {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  /* Inset to the same edges as the text and dividers */
+  .hero-image {
+    width: calc(100% - 2 * var(--gutter));
+    max-width: calc(var(--max-width) - 2 * var(--gutter));
+    margin: 0 auto;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .hero-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── CASE BODY ── */
+  .case-body {
+    padding: 0 var(--gutter);
+  }
+
+  .case-section {
+    display: grid;
+    /* minmax(0, …) lets the text column shrink instead of overflowing on narrow screens */
+    grid-template-columns: minmax(160px, 1fr) minmax(0, 800px);
+    gap: 48px;
+    padding: 80px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .case-section:last-child {
+    border-bottom: none;
+  }
+
+  .section-index {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+
+  .section-num {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  .section-content h3 {
+    font-size: clamp(28px, 2.5vw, 40px);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
+
+  .section-content p {
+    margin-bottom: 20px;
+  }
+
+  .section-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-content strong {
+    font-weight: 500;
+  }
+
+  .solution-list {
+    list-style: none;
+    margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .solution-list:last-child {
+    margin-bottom: 0;
+  }
+
+  .solution-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 16px;
+  }
+
+  .solution-list li::before {
+    content: '—';
+    margin-top: 2px;
+  }
+
+  /* Quotes and images inside a list item span the whole text column */
+  .solution-list li > .pullquote,
+  .solution-list li > .case-image {
+    grid-column: 1 / -1;
+  }
+
+  /* "Handed Over" tag */
+  .outcome-tag {
+    display: inline-block;
+    margin-bottom: 24px;
+    padding: 6px 14px;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--ink);
+  }
+
+  /* Process steps */
+  .step-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 24px 0 48px;
+    border: 1px solid var(--line);
+  }
+
+  .step-box {
+    position: relative;
+    padding: 24px 28px;
+    border-right: 1px solid var(--line);
+  }
+
+  .step-box:last-child {
+    border-right: none;
+  }
+
+  .step-label {
+    margin-bottom: 8px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .step-value {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* Arrow badge between steps */
+  .step-box::after {
+    content: '→';
+    position: absolute;
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+    color: var(--ink-muted);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  }
+
+  .step-box:last-child::after {
+    content: none;
+  }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 40px 0;
+    border: 1px solid var(--line);
+  }
+
+  .stat-box {
+    padding: 32px 28px;
+    border-right: 1px solid var(--line);
+  }
+
+  .stat-box:last-child {
+    border-right: none;
+  }
+
+  .stat-number {
+    margin-bottom: 8px;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    margin: 28px 0 16px;
+    padding: 24px 32px;
+    border-left: 2px solid var(--ink);
+  }
+
+  .pullquote + .case-image {
+    margin-top: 12px;
+  }
+
+  .pullquote blockquote {
+    margin-bottom: 12px;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.5;
+  }
+
+  .pullquote cite {
+    font-size: 12px;
+    font-style: normal;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* Images */
+  .case-image {
+    width: 100%;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+
+  .case-image img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .case-image figcaption {
+    padding-top: 12px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  .case-image a {
+    color: var(--ink);
+  }
+
+  /* Prototype video */
+  .prototype-video {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+    padding: 48px;
+    overflow: hidden;
+    background: #F5F5F5;
+  }
+
+  .prototype-video video {
+    display: block;
+    width: 450px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ── CASE NAVIGATION ── */
+  .case-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+  }
+
+  /* Dividers drawn inside the gutters so they start/end exactly at the text edges
+     (absolute, so they aren't grid items) */
+  .case-nav::before,
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--gutter);
+    right: var(--gutter);
+    height: 1px;
+    background: var(--line);
+  }
+
+  .case-nav-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 56px var(--gutter);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+
+  .case-nav-item:hover {
+    background: var(--surface);
+  }
+
+  .case-nav-item + .case-nav-item {
+    border-left: 1px solid var(--line);
+  }
+
+  .case-nav-item--right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .nav-case-title {
+    font-size: 32px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    padding: 80px var(--gutter);
+  }
+
+  .footer-cta-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .footer-email {
+    display: block;
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+    gap: 40px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .footer-copy {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  /* Hero, every section, case nav and footer are .reveal containers: when one
+     scrolls into view, its .stagger children rise one after another in page
+     order (--i = 0, 1, 2 …), so every section plays the same sequence.
+     Delay is capped so content deep inside a tall section never waits.
+     Only hidden when JS is running, so content never disappears without it.
+     Images are intentionally not animated. */
+  .js .reveal .stagger {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s var(--ease-out) calc(min(var(--i, 0), 6) * 0.1s),
+      transform 0.9s var(--ease-out) calc(min(var(--i, 0), 6) * 0.1s);
+  }
+
+  .js .reveal.visible .stagger {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal .stagger {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ── TABLET: up to 1199px ── */
+  @media (max-width: 1199px) {
+    :root { --gutter: 40px; }
+
+    .case-hero {
+      grid-template-columns: 1fr 1fr;
+      padding-bottom: 64px;
+    }
+
+    .case-section { gap: 32px; }
+
+    .case-nav-item { padding: 48px var(--gutter); }
+
+    footer {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 72px var(--gutter);
+    }
+
+    .footer-right { align-items: flex-start; }
+  }
+
+  /* ── NARROW TEXT COLUMN: up to 900px ── */
+  /* The 3-up stats get too cramped here, so they stack */
+  @media (max-width: 900px) {
+    .stats-row {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-box {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stat-box:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* ── MOBILE: up to 767px ── */
+  @media (max-width: 767px) {
+    :root { --gutter: 24px; }
+
+    /* Nav */
+    .nav-inner { padding: 20px var(--gutter); }
+    .nav-logo { font-size: 20px; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 18px; letter-spacing: 0.06em; }
+    .nav-about { display: none; }
+
+    /* Hero */
+    .case-hero {
+      grid-template-columns: 1fr;
+      padding: 100px var(--gutter) 24px;
+    }
+
+    .case-title { font-size: clamp(36px, 10vw, 64px); }
+    .case-subtitle { font-size: 16px; }
+
+    .meta-item:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 16px; }
+    .meta-item:nth-child(even) { padding-left: 16px; }
+    .meta-label { font-size: 11px; }
+    .meta-value { font-size: 16px; }
+
+    /* Body */
+    .case-section {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      padding: 40px 0;
+    }
+
+    .section-index {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-num { margin-bottom: 0; }
+
+    .section-content h3 { font-size: clamp(22px, 6vw, 32px); }
+
+    .section-content p,
+    .solution-list li { font-size: 17px; line-height: 1.7; }
+
+    /* Process steps stack */
+    .step-row { grid-template-columns: 1fr; }
+
+    .step-box {
+      padding: 32px 28px;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step-box:last-child { border-bottom: none; }
+
+    /* → becomes ↓ */
+    .step-box::after {
+      content: '↓';
+      right: 50%;
+      top: auto;
+      bottom: -13px;
+      transform: translateX(50%);
+    }
+
+    .step-box:last-child::after { content: none; }
+
+    .stat-number { font-size: 40px; }
+
+    .pullquote { padding: 16px 20px; }
+
+    .prototype-video { padding: 24px; }
+
+    /* Case nav */
+    .case-nav { grid-template-columns: 1fr; }
+    .case-nav-item { padding: 36px var(--gutter); }
+    .nav-case-title { font-size: 20px; }
+
+    .case-nav-item + .case-nav-item {
+      position: relative;
+      border-left: none;
+    }
+
+    /* Separator between the stacked items, inset to the text edges */
+    .case-nav-item + .case-nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: var(--gutter);
+      right: var(--gutter);
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* Footer */
+    footer {
+      gap: 40px;
+      padding: 56px var(--gutter);
+    }
+
+    .footer-email { font-size: clamp(28px, 8vw, 48px); }
+    .footer-right { gap: 24px; }
+    .footer-links { flex-wrap: wrap; gap: 20px; }
+    .footer-copy { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">EJ Cho</a>
+    <ul class="nav-links">
+      <li><a href="index.html#works">Works</a></li>
+      <li class="nav-about"><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="case-hero reveal">
+  <div>
+    <h1 class="case-title stagger" style="--i:0">Target AU</h1>
+    <p class="case-subtitle stagger" style="--i:1">Modernising the Checkout Architecture</p>
+  </div>
+
+  <div class="case-meta">
+    <div class="meta-item stagger" style="--i:2">
+      <div class="meta-label">Role</div>
+      <div class="meta-value">Product Designer<br>Checkout &amp; Core Experience</div>
+    </div>
+    <div class="meta-item stagger" style="--i:3">
+      <div class="meta-label">Type</div>
+      <div class="meta-value">Large-scale E-commerce</div>
+    </div>
+    <div class="meta-item stagger" style="--i:4">
+      <div class="meta-label">Scope</div>
+      <div class="meta-value">Core Journey Redesign<br>Checkout &amp; Navigation</div>
+    </div>
+    <div class="meta-item stagger" style="--i:5">
+      <div class="meta-label">Period</div>
+      <div class="meta-value">2021 — Present</div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO IMAGE -->
+<div class="hero-image">
+  <img src="images/Target_main.png" alt="Target AU checkout">
+</div>
+
+<!-- BODY -->
+<div class="case-body">
+
+  <!-- 01. Brief -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">01</span>
+      <span class="section-title">Brief</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">The Challenge</h3>
+
+      <p class="stagger" style="--i:2"><strong>Legacy Structure</strong><br>
+      The original checkout followed a rigid multi-page structure:</p>
+
+      <div class="step-row stagger" style="--i:3">
+        <div class="step-box">
+          <div class="step-label">Step 1</div>
+          <div class="step-value">Basket</div>
+        </div>
+        <div class="step-box">
+          <div class="step-label">Step 2</div>
+          <div class="step-value">Delivery &amp; Contact Details &amp; Payment</div>
+        </div>
+      </div>
+
+      <p class="stagger" style="--i:4"><strong>The Core Problems</strong></p>
+
+      <ul class="solution-list">
+        <li>
+          <div class="stagger" style="--i:5"><strong>Delayed Stock Validation</strong><br>Stock wasn't accurately validated until customers entered a delivery address or selected a Click &amp; Collect store. For delivery orders, out-of-stock items triggered an error, forcing customers to return to the basket and manually remove unavailable items (~5,000 cases/month). Click &amp; Collect, however, automatically removed out-of-stock items.</div>
+          <div class="pullquote stagger" style="--i:6">
+            <blockquote>“Stock appears available but is out of stock at checkout. It’s so annoying when I only find out after I’ve gone through everything!”</blockquote>
+            <cite>— Participant 12</cite>
+          </div>
+          <figure class="case-image">
+            <img src="images/Target_Old_issue1.png" alt="Delayed stock validation" loading="lazy">
+            <figcaption>Delayed Stock Validation — Stock validation delayed to final step</figcaption>
+          </figure>
+        </li>
+
+        <li>
+          <div class="stagger" style="--i:7"><strong>Delivery Selection Friction</strong><br>78% of checkout customers were guests and exposed to OnePass promotions during checkout. Styled like delivery options, the promotions confused users and made it harder to identify actual delivery choices.</div>
+          <div class="pullquote stagger" style="--i:8">
+            <blockquote>“The OnePass option kept showing up and made the process confusing.”</blockquote>
+            <cite>— Participant 13</cite>
+          </div>
+          <figure class="case-image">
+            <img src="images/Target_Old_issue2.png" alt="Delivery selection friction" loading="lazy">
+            <figcaption>Delivery Selection Friction — Confusing delivery options</figcaption>
+          </figure>
+        </li>
+      </ul>
+
+      <p class="stagger" style="--i:9"><strong>The Objective</strong><br>
+      Re-architect to a single-page checkout that:</p>
+
+      <ul class="solution-list">
+        <li><div class="stagger" style="--i:10">Validates real-time stock and delivery fees directly at the Basket stage.</div></li>
+        <li><div class="stagger" style="--i:11">Simplifies delivery options by removing promotional clutter.</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 02. Discover -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">02</span>
+      <span class="section-title">Discover</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">The A/B Test Results</h3>
+      <p class="stagger" style="--i:2">We ran a 2-week A/B test to validate the single-page checkout. While downstream steps improved, we found a clear issue right at the entry point.</p>
+
+      <div class="stats-row stagger" style="--i:3">
+        <div class="stat-box">
+          <div class="stat-number">+5.1%</div>
+          <div class="stat-desc">Drop-off at cart landing compared to control</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">↓</div>
+          <div class="stat-desc">Lower drop-off across all downstream checkout steps</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">$20K</div>
+          <div class="stat-desc">AUD revenue loss due to the initial cart leak</div>
+        </div>
+      </div>
+
+      <figure class="case-image">
+        <img src="images/AB_test.png" alt="A/B test results" loading="lazy">
+        <figcaption>A/B test — 2-week funnel comparison, control vs. single-page checkout</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 03. Problem Space -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">03</span>
+      <span class="section-title">Problem Space</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">Why the Basket Leaked</h3>
+
+      <p class="stagger" style="--i:2">Target does not have a mini-cart. The basket page is the only place where users can review and edit their items before buying.</p>
+
+      <p class="stagger" style="--i:3"><strong>The Conflict</strong><br>
+      To solve the late-stage stock surprises, we moved the delivery and postcode selector to the top of the basket page.</p>
+
+      <ul class="solution-list">
+        <li><div class="stagger" style="--i:4">This heavy layout shifted the hierarchy and blocked the product list view.</div></li>
+        <li><div class="stagger" style="--i:5">Users wanting to review their items were forced to make delivery decisions first, causing cognitive overload and the 4% spike in drop-offs.</div></li>
+      </ul>
+
+      <figure class="case-image">
+        <img src="images/Problemspace.png" alt="SPC design-heavy delivery selector blocking product list" loading="lazy">
+        <figcaption>Impact — cognitive overload causing cart abandonment</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 04. Refinement Strategy -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">04</span>
+      <span class="section-title">Refinement Strategy</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">Balancing Fulfillment and Product Visibility</h3>
+
+      <p class="stagger" style="--i:2">Rather than removing fulfillment selection, I reduced its visual footprint to better balance business needs with the customer's primary task. The goal was to validate stock early while restoring visibility of basket items.</p>
+
+      <p class="stagger" style="--i:3"><strong>Design Changes</strong></p>
+      <ul class="solution-list">
+        <li><div class="stagger" style="--i:4"><strong>Compact Fulfillment Selector</strong><br>Reduced the vertical space used by the fulfillment selector while keeping delivery information accessible.</div></li>
+        <li><div class="stagger" style="--i:5"><strong>Product Visibility</strong><br>Brought basket items back into the initial viewport so customers could review products without excessive scrolling.</div></li>
+        <li><div class="stagger" style="--i:6"><strong>Early Stock Validation</strong><br>Maintained early stock validation without introducing the heavy layout used in the original experiment.</div></li>
+      </ul>
+
+      <figure class="case-image">
+        <img src="images/Target_final.png" alt="Final SPC design with compact fulfillment selector and product visibility" loading="lazy">
+        <figcaption>The final design balanced early stock validation with product visibility by reducing the footprint of the fulfillment selector instead of removing it</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 05. Outcome -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">05</span>
+      <span class="section-title">Outcome</span>
+    </div>
+    <div class="section-content">
+      <div class="outcome-tag stagger" style="--i:1">Handed Over</div>
+      <p class="stagger" style="--i:2">Delivered the refined basket experience with engineering-ready specifications.<br>
+      The final solution balanced early stock validation with product visibility while creating a scalable foundation for future checkout improvements.</p>
+
+      <p class="stagger" style="--i:3"><strong>Key Takeaway</strong></p>
+      <p class="stagger" style="--i:4">This project reminded me that good UX doesn't ask customers to think about business rules. It quietly supports them while helping people stay focused on what they came to do.</p>
+
+      <div class="prototype-video">
+        <video
+          id="prototype-video"
+          src="images/Target_Checkout.mp4"
+          muted
+          loop
+          playsinline
+          controls
+          preload="metadata">
+        </video>
+      </div>
+    </div>
+  </section>
+</div><!-- /case-body -->
+
+<!-- CASE NAVIGATION -->
+<div class="case-nav reveal">
+  <a href="index.html#works" class="case-nav-item">
+    <span class="nav-direction stagger" style="--i:0">← All Works</span>
+    <span class="nav-case-title stagger" style="--i:1">Back to Works</span>
+  </a>
+  <a href="loop11.html" class="case-nav-item case-nav-item--right">
+    <span class="nav-direction stagger" style="--i:1">Next Case →</span>
+    <span class="nav-case-title stagger" style="--i:2">Loop11</span>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer class="reveal">
+  <div class="footer-left">
+    <div class="footer-cta-label stagger" style="--i:0">Let's Talk</div>
+    <a href="mailto:cheunji@gmail.com" class="footer-email stagger" style="--i:1">cheunji@gmail.com</a>
+  </div>
+  <div class="footer-right">
+    <div class="footer-links stagger" style="--i:2">
+      <a href="https://www.linkedin.com/in/ej-cho-14728656/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.behance.net/eunji_" target="_blank" rel="noopener noreferrer">Behance</a>
+      <a href="files/EJ_Cho_CV_2026.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+    </div>
+    <div class="footer-copy stagger" style="--i:3">© 2026 EJ Cho</div>
+  </div>
+</footer>
+
+<script>
+  // Reveal each container (hero, section, nav, footer) as it scrolls into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Prototype video: plays only while at least half of it is on screen
+  const video = document.getElementById('prototype-video');
+  if (video && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            // If autoplay is blocked, the controls' Play button still works
+            playPromise.catch(() => {});
+          }
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.5 }).observe(video);
+  }
+</script>
+</body>
+</html>

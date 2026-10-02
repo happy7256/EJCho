@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FFFCEE">
+<title>Loop11 — EJ Cho</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── VARIABLES & RESET ── */
+  :root {
+    --bg: #FFFCEE; /* lemon-tinted white */
+    --surface: #F3F1E6;
+    --ink: #1A2FD0; /* deep blue */
+    --ink-muted: #4A58C4;
+    --line: rgba(26, 47, 208, 0.18);
+    --hover: #6577E6;
+    --sans: 'Space Grotesk', sans-serif;
+    --serif: 'Fraunces', serif;
+    --max-width: 1600px;
+    --gutter: 48px; /* page side padding, overridden per breakpoint */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* Shared page container */
+  .case-hero,
+  .case-body,
+  .case-nav,
+  footer {
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Shared small uppercase label */
+  .meta-label,
+  .section-title,
+  .sub-label,
+  .nav-direction,
+  .footer-cta-label,
+  .footer-links a {
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    background: var(--bg);
+  }
+
+  .nav-inner {
+    width: 100%;
+    max-width: var(--max-width);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px var(--gutter);
+  }
+
+  .nav-logo {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: inline-block;
+    font-size: 32px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--hover);
+    transform: translateY(1px);
+  }
+
+  /* ── CASE HERO ── */
+  .case-hero {
+    display: grid;
+    grid-template-columns: 1fr 450px;
+    gap: 16px;
+    align-items: end;
+    padding: 140px var(--gutter) 80px;
+  }
+
+  .case-title {
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .case-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-self: end;
+  }
+
+  .meta-item {
+    padding: 20px 0 20px 32px;
+    border-top: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+
+  .meta-item:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .meta-item:nth-child(2n) {
+    border-right: none;
+  }
+
+  .meta-item:nth-last-child(-n + 2) {
+    padding-bottom: 0;
+  }
+
+  .meta-item:last-child {
+    padding-right: 0;
+  }
+
+  .meta-label {
+    margin-bottom: 6px;
+  }
+
+  .meta-value {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  /* Inset to the same edges as the text and dividers */
+  .hero-image {
+    width: calc(100% - 2 * var(--gutter));
+    max-width: calc(var(--max-width) - 2 * var(--gutter));
+    margin: 0 auto;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .hero-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── CASE BODY ── */
+  .case-body {
+    padding: 0 var(--gutter);
+  }
+
+  .case-section {
+    display: grid;
+    /* minmax(0, …) lets the text column shrink instead of overflowing on narrow screens */
+    grid-template-columns: minmax(160px, 1fr) minmax(0, 800px);
+    gap: 48px;
+    padding: 80px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .case-section:last-child {
+    border-bottom: none;
+  }
+
+  .section-index {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+
+  .section-num {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  .section-content h3 {
+    font-size: clamp(28px, 2.5vw, 40px);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
+
+  .section-content p {
+    margin-bottom: 20px;
+  }
+
+  .section-content p:last-child,
+  .section-content p.flush {
+    margin-bottom: 0;
+  }
+
+  .section-content strong {
+    font-weight: 500;
+  }
+
+  /* Problem / Solution blocks */
+  .ps-block {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .ps-block:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .sub-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .sub-title {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 14px;
+  }
+
+  .solution-list {
+    list-style: none;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .solution-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+  }
+
+  .solution-list li::before {
+    content: '—';
+    margin-top: 2px;
+  }
+
+  /* Process steps */
+  .step-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 24px 0 48px;
+    border: 1px solid var(--line);
+  }
+
+  .step-box {
+    position: relative;
+    padding: 24px 28px;
+    border-right: 1px solid var(--line);
+  }
+
+  .step-box:last-child {
+    border-right: none;
+  }
+
+  .step-label {
+    margin-bottom: 8px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .step-value {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* Arrow badge between steps */
+  .step-box::after {
+    content: '→';
+    position: absolute;
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+    color: var(--ink-muted);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  }
+
+  .step-box:last-child::after {
+    content: none;
+  }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 40px 0;
+    border: 1px solid var(--line);
+  }
+
+  .stats-row.three-columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stat-box {
+    padding: 32px 28px;
+    border-right: 1px solid var(--line);
+  }
+
+  .stat-box:last-child {
+    border-right: none;
+  }
+
+  .stat-number {
+    margin-bottom: 8px;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    margin: 28px 0 16px;
+    padding: 24px 32px;
+    border-left: 2px solid var(--ink);
+  }
+
+  .pullquote blockquote {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.5;
+  }
+
+  .pullquote cite {
+    font-size: 12px;
+    font-style: normal;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* Images */
+  .case-image {
+    width: 100%;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+
+  .case-image img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .case-image figcaption {
+    padding-top: 12px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  .case-image figcaption.top {
+    padding: 0 0 16px;
+  }
+
+  .case-image a {
+    color: var(--ink);
+    text-underline-offset: 3px;
+    transition: color 0.25s ease;
+  }
+
+  .case-image a:hover {
+    color: var(--hover);
+  }
+
+  /* Linked image: no underline on the picture itself */
+  .case-image a.image-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  /* ── CASE NAVIGATION ── */
+  .case-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+  }
+
+  /* Dividers drawn inside the gutters so they start/end exactly at the text edges
+     (absolute, so they aren't grid items) */
+  .case-nav::before,
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--gutter);
+    right: var(--gutter);
+    height: 1px;
+    background: var(--line);
+  }
+
+  .case-nav-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 56px var(--gutter);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+
+  .case-nav-item:hover {
+    background: var(--surface);
+  }
+
+  .case-nav-item + .case-nav-item {
+    border-left: 1px solid var(--line);
+  }
+
+  .case-nav-item--right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .nav-case-title {
+    font-size: 32px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    padding: 80px var(--gutter);
+  }
+
+  .footer-cta-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .footer-email {
+    display: block;
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+    gap: 40px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .footer-copy {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  /* Hero, every section, case nav and footer are .reveal containers: when one
+     scrolls into view, its .stagger children rise one after another in page
+     order (--i = 0, 1, 2 …), so every section plays the same sequence.
+     Delay is capped so content deep inside a tall section never waits.
+     Only hidden when JS is running, so content never disappears without it.
+     Images are intentionally not animated. */
+  .js .reveal .stagger {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s var(--ease-out) calc(min(var(--i, 0), 6) * 0.1s),
+      transform 0.9s var(--ease-out) calc(min(var(--i, 0), 6) * 0.1s);
+  }
+
+  .js .reveal.visible .stagger {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal .stagger {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ── TABLET: up to 1199px ── */
+  @media (max-width: 1199px) {
+    :root { --gutter: 40px; }
+
+    .case-hero {
+      grid-template-columns: 1fr 1fr;
+      padding-bottom: 64px;
+    }
+
+    .case-section { gap: 32px; }
+
+    .case-nav-item { padding: 48px var(--gutter); }
+
+    footer {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 72px var(--gutter);
+    }
+
+    .footer-right { align-items: flex-start; }
+  }
+
+  /* ── NARROW TEXT COLUMN: up to 900px ── */
+  /* The 4-step row and 3-up stats get too cramped here, so they stack */
+  @media (max-width: 900px) {
+    .step-row,
+    .stats-row.three-columns {
+      grid-template-columns: 1fr;
+    }
+
+    .step-box {
+      padding: 32px 28px;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step-box:last-child {
+      border-bottom: none;
+    }
+
+    /* → becomes ↓ */
+    .step-box::after {
+      content: '↓';
+      right: 50%;
+      top: auto;
+      bottom: -13px;
+      transform: translateX(50%);
+    }
+
+    .step-box:last-child::after {
+      content: none;
+    }
+
+    .stats-row.three-columns .stat-box {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stats-row.three-columns .stat-box:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* ── MOBILE: up to 767px ── */
+  @media (max-width: 767px) {
+    :root { --gutter: 24px; }
+
+    /* Nav */
+    .nav-inner { padding: 20px var(--gutter); }
+    .nav-logo { font-size: 20px; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 18px; letter-spacing: 0.06em; }
+    .nav-about { display: none; }
+
+    /* Hero */
+    .case-hero {
+      grid-template-columns: 1fr;
+      padding: 100px var(--gutter) 24px;
+    }
+
+    .case-title { font-size: clamp(36px, 10vw, 64px); }
+    .case-subtitle { font-size: 16px; }
+
+    .meta-item:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 16px; }
+    .meta-item:nth-child(even) { padding-left: 16px; }
+    .meta-label { font-size: 11px; }
+    .meta-value { font-size: 16px; }
+
+    /* Body */
+    .case-section {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      padding: 40px 0;
+    }
+
+    .section-index {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-num { margin-bottom: 0; }
+    .section-num br { display: none; } /* "03 MANAGE" on one line */
+
+    .section-content h3 { font-size: clamp(22px, 6vw, 32px); }
+
+    .section-content p,
+    .solution-list li { font-size: 17px; line-height: 1.7; }
+
+    .ps-block { padding: 32px 0; }
+
+    .stats-row { grid-template-columns: 1fr; }
+
+    .stat-box {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stat-box:last-child { border-bottom: none; }
+    .stat-number { font-size: 40px; }
+
+    .pullquote { padding: 12px 16px; }
+
+    /* Case nav */
+    .case-nav { grid-template-columns: 1fr; }
+    .case-nav-item { padding: 36px var(--gutter); }
+    .nav-case-title { font-size: 20px; }
+
+    .case-nav-item + .case-nav-item {
+      position: relative;
+      border-left: none;
+    }
+
+    /* Separator between the stacked items, inset to the text edges */
+    .case-nav-item + .case-nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: var(--gutter);
+      right: var(--gutter);
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* Footer */
+    footer {
+      gap: 40px;
+      padding: 56px var(--gutter);
+    }
+
+    .footer-email { font-size: clamp(28px, 8vw, 48px); }
+    .footer-right { gap: 24px; }
+    .footer-links { flex-wrap: wrap; gap: 20px; }
+    .footer-copy { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">EJ Cho</a>
+    <ul class="nav-links">
+      <li><a href="index.html#works">Works</a></li>
+      <li class="nav-about"><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="case-hero reveal">
+  <div>
+    <h1 class="case-title stagger" style="--i:0">Loop11</h1>
+    <p class="case-subtitle stagger" style="--i:1">Re-architecting a User Testing Platform</p>
+  </div>
+
+  <div class="case-meta">
+    <div class="meta-item stagger" style="--i:2">
+      <div class="meta-label">Role</div>
+      <div class="meta-value">Product Designer</div>
+    </div>
+    <div class="meta-item stagger" style="--i:3">
+      <div class="meta-label">Type</div>
+      <div class="meta-value">B2B SaaS<br>Research Technology</div>
+    </div>
+    <div class="meta-item stagger" style="--i:4">
+      <div class="meta-label">Scope</div>
+      <div class="meta-value">End-to-end Product Redesign<br>&amp; Design System</div>
+    </div>
+    <div class="meta-item stagger" style="--i:5">
+      <div class="meta-label">Period</div>
+      <div class="meta-value">2018 — 2019</div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO IMAGE -->
+<div class="hero-image">
+  <img src="images/Loop11_main.png" alt="Loop11 platform redesign">
+</div>
+
+<!-- BODY -->
+<div class="case-body">
+
+  <!-- 1. Brief -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">01</span>
+      <span class="section-title">Brief</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">The Challenge of Complexity</h3>
+      <p class="stagger" style="--i:2">Loop11 is a pioneer in usability testing, but as the platform grew, its core workflows — creating tests and reviewing results — became fragmented. Users were overwhelmed by UI noise, and critical actions were often buried.</p>
+      <p class="stagger" style="--i:3">I led the end-to-end redesign to transform Loop11 into a clearer, more structured platform for researchers.</p>
+
+      <div class="step-row stagger" style="--i:4">
+        <div class="step-box">
+          <div class="step-label">Manage</div>
+          <div class="step-value">Project List</div>
+          <div class="stat-desc">(Deep dive)</div>
+        </div>
+        <div class="step-box">
+          <div class="step-label">Build</div>
+          <div class="step-value">Project Builder</div>
+          <div class="stat-desc">(Deep dive)</div>
+        </div>
+        <div class="step-box">
+          <div class="step-label">Conduct</div>
+          <div class="step-value">Moderated Research</div>
+        </div>
+        <div class="step-box">
+          <div class="step-label">Analyze</div>
+          <div class="step-value">Reports &amp; Insights</div>
+          <div class="stat-desc">(Deep dive)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Discover -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">02</span>
+      <span class="section-title">Discover</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">Benchmarking the Friction</h3>
+      <p class="stagger" style="--i:2">Before diving into design, we initiated a discovery phase to understand the "why" behind user frustration.</p>
+
+      <div class="stats-row stagger" style="--i:3">
+        <div class="stat-box">
+          <div class="stat-number">17.7%</div>
+          <div class="stat-desc">of users cited the project list and reports UI as their primary pain point</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">32%</div>
+          <div class="stat-desc">Only 32% of participants could successfully find the "Launch URL" in baseline usability testing</div>
+        </div>
+      </div>
+
+      <p class="stagger" style="--i:4">Through Intercom data analysis and interviews with power users, we identified the project list and reporting UI as the primary pain point. A baseline usability study confirmed this wasn't just aesthetic — only 32% of participants could complete a critical task. <strong>This was a fundamental usability failure.</strong></p>
+
+      <div class="pullquote stagger" style="--i:5">
+        <blockquote>“Couldn’t figure out how to delete or edit.”</blockquote>
+        <cite>— Customer interview</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Project List -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">03<br> MANAGE</span>
+      <span class="section-title">Project List</span>
+    </div>
+    <div class="section-content">
+      <div class="ps-block">
+        <div class="sub-label stagger" style="--i:1">Problem</div>
+        <div class="sub-title stagger" style="--i:2">Difficult to manage the projects</div>
+        <p class="stagger" style="--i:3">Users struggled to understand how to take action on their projects and find their current project status.</p>
+
+        <figure class="case-image">
+          <img src="images/Loop11_current_project_list.png" alt="Difficult to manage projects" loading="lazy">
+        </figure>
+
+        <div class="stats-row three-columns stagger" style="--i:4">
+          <div class="stat-box">
+            <div class="step-value">1. Not obvious</div>
+            <div class="stat-desc">The cogwheel doesn’t clearly communicate edit/delete actions.</div>
+          </div>
+          <div class="stat-box">
+            <div class="step-value">2. Unclear next step</div>
+            <div class="stat-desc">It’s hard to know what action to take (edit, continue, or launch).</div>
+          </div>
+          <div class="stat-box">
+            <div class="step-value">3. Hard to find status</div>
+            <div class="stat-desc">Understanding the current state requires extra clicks.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ps-block">
+        <div class="sub-label stagger" style="--i:5">Solution</div>
+        <div class="sub-title stagger" style="--i:6">A Unified Control Centre</div>
+        <ul class="solution-list">
+          <li><div class="stagger" style="--i:7"><strong>Consolidated View</strong><br>Combined all project states into a single list using intuitive status tags — no more tab-switching to find what's live versus in draft.</div></li>
+          <li><div class="stagger" style="--i:8"><strong>Direct Insights</strong><br>Surfaced key outcomes — success, failure, and participant videos — directly on the list view. Researchers could understand the value of their tests at a glance, without navigating deeper.</div></li>
+        </ul>
+
+        <figure class="case-image">
+          <img src="images/Loop11_after_project_list.png" alt="Redesigned project list page" loading="lazy">
+          <figcaption>After — Redesigned project list page</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Project Builder -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">04<br> BUILD</span>
+      <span class="section-title">Project Builder</span>
+    </div>
+    <div class="section-content">
+      <div class="ps-block">
+        <div class="sub-label stagger" style="--i:1">Problem</div>
+        <div class="sub-title stagger" style="--i:2">A Confusing Setup Journey</div>
+        <p class="stagger" style="--i:3">The legacy study setup journey was harder than it needed to be. Researchers had to move between separate screens to build and review tasks and questions, making it difficult to see how the pieces fit together. This became especially problematic for complex studies, where creating and managing multiple tasks made it harder to maintain an overview of the study.</p>
+
+        <figure class="case-image">
+          <img src="images/Loop11_current_builder.png" alt="Confusing project builder" loading="lazy">
+          <figcaption>Before — Legacy project builder</figcaption>
+        </figure>
+      </div>
+
+      <div class="ps-block">
+        <div class="sub-label stagger" style="--i:4">Solution</div>
+        <div class="sub-title stagger" style="--i:5">Direct Manipulation &amp; WYSIWYG</div>
+        <ul class="solution-list">
+          <li><div class="stagger" style="--i:6"><strong>Logical Stages</strong><br>Reorganised the setup into three clear stages: Format → Tasks &amp; Questions → Settings. Each stage had a single job.</div></li>
+          <li><div class="stagger" style="--i:7"><strong>WYSIWYG Editor</strong><br>Introduced a drag-and-drop builder, allowing users to visually structure their studies. This reduced reliance on hidden menus and made the "Launch" action impossible to miss.</div></li>
+        </ul>
+
+        <figure class="case-image">
+          <img src="images/Loop11_after_project_builder.png" alt="Redesigned project builder" loading="lazy">
+          <figcaption>After — New drag-and-drop builder</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Reporting -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">05<br> ANALYZE</span>
+      <span class="section-title">Reporting</span>
+    </div>
+    <div class="section-content">
+      <div class="ps-block">
+        <div class="sub-label stagger" style="--i:1">Problem</div>
+        <div class="sub-title stagger" style="--i:2">High-level Data, Limited Insight</div>
+        <p class="stagger" style="--i:3">Reporting focused on task-level success rates without showing the flow of individual questions. This made it difficult for researchers to identify where participants struggled and understand the results in context.</p>
+
+        <figure class="case-image">
+          <img src="images/Loop11_current_report.png" alt="Current project reporting page" loading="lazy">
+          <figcaption>Before — Legacy reporting page</figcaption>
+        </figure>
+      </div>
+
+      <div class="ps-block">
+        <div class="sub-label stagger" style="--i:4">Solution</div>
+        <div class="sub-title stagger" style="--i:5">Contextual Results</div>
+        <p class="stagger flush" style="--i:6">The redesigned report shows the full study structure, with tasks and their related questions clearly grouped together. Researchers can move directly from task-level results to individual questions, making it easier to understand the context behind the data and uncover insights faster.</p>
+
+        <figure class="case-image">
+          <img src="images/Loop11_after_report.png" alt="Redesigned project reporting page" loading="lazy">
+          <figcaption>After — Contextual results with per-task breakdown</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Design System -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">06</span>
+      <span class="section-title">Design System</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">Building a Foundation for Growth</h3>
+
+      <div class="pullquote stagger" style="--i:2">
+        <blockquote>“A redesign is only as effective as its ability to scale.”</blockquote>
+      </div>
+
+      <p class="stagger" style="--i:3">As a small team with limited design resources, I built a design system to make the new experience consistent, reusable and easier to extend. The system became the foundation for both the product UI and its implementation in React.</p>
+
+      <figure class="case-image">
+        <a class="image-link" href="https://loop11.design/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+          <img src="images/Loop11_design_system.png" alt="" loading="lazy">
+        </a>
+        <figcaption><a href="https://loop11.design/" target="_blank" rel="noopener noreferrer"><strong>View Loop11 Design System →</strong></a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 7. Outcome -->
+  <section class="case-section reveal">
+    <div class="section-index stagger" style="--i:0">
+      <span class="section-num">07</span>
+      <span class="section-title">Outcome</span>
+    </div>
+    <div class="section-content">
+      <h3 class="stagger" style="--i:1">Redesigning the end-to-end research experience</h3>
+      <p class="stagger" style="--i:2">The redesign reimagined Loop11’s core research workflow — from creating and managing studies, to conducting moderated sessions and turning participant data into insights.</p>
+      <p class="stagger" style="--i:3">Together, these changes created a clearer, more connected experience across the researcher journey — from study setup to research insight.</p>
+
+      <figure class="case-image">
+        <figcaption class="top"><a href="https://loop11.com/" target="_blank" rel="noopener noreferrer"><strong>Visit Loop11 →</strong></a></figcaption>
+        <img src="images/Loop11_final.png" alt="Loop11 final redesign" loading="lazy">
+      </figure>
+    </div>
+  </section>
+</div><!-- /case-body -->
+
+<!-- CASE NAVIGATION -->
+<div class="case-nav reveal">
+  <a href="target.html" class="case-nav-item">
+    <span class="nav-direction stagger" style="--i:0">← Previous Case</span>
+    <span class="nav-case-title stagger" style="--i:1">Target AU</span>
+  </a>
+  <a href="stibee.html" class="case-nav-item case-nav-item--right">
+    <span class="nav-direction stagger" style="--i:1">Next Case →</span>
+    <span class="nav-case-title stagger" style="--i:2">Stibee</span>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer class="reveal">
+  <div class="footer-left">
+    <div class="footer-cta-label stagger" style="--i:0">Let's Talk</div>
+    <a href="mailto:cheunji@gmail.com" class="footer-email stagger" style="--i:1">cheunji@gmail.com</a>
+  </div>
+  <div class="footer-right">
+    <div class="footer-links stagger" style="--i:2">
+      <a href="https://www.linkedin.com/in/ej-cho-14728656/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.behance.net/eunji_" target="_blank" rel="noopener noreferrer">Behance</a>
+      <a href="files/EJ_Cho_CV_2026.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+    </div>
+    <div class="footer-copy stagger" style="--i:3">© 2026 EJ Cho</div>
+  </div>
+</footer>
+
+<script>
+  // Reveal each container (hero, section, nav, footer) as it scrolls into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
